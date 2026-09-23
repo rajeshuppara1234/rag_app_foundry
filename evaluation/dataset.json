@@ -1,0 +1,1076 @@
+{
+  "schema_version": 1,
+  "dataset_id": "rag-pdf-golden-v1",
+  "status": "source_checked_candidate_pending_human_review",
+  "source": {
+    "path": "app/data/rag.pdf",
+    "filename": "rag.pdf",
+    "title": "Harness Proprietary Data with Foundational Models and RAG",
+    "author": "Marian Veteanu",
+    "pages": 20,
+    "sha256": "0f12f67355f1f03dc5b8ec373733fddd438556f27e98b0355dd40e220d5817b4"
+  },
+  "scope": "Answer using this PDF only. Historical examples describe the slides, not current product capabilities. Page numbers are one-based PDF pages. Reference contexts are annotated evidence, not an exhaustive relevance judgment of every passage.",
+  "cases": [
+    {
+      "id": "rag-001",
+      "split": "dev",
+      "topic": "foundations",
+      "type": "factual",
+      "difficulty": "easy",
+      "user_input": "Who authored the presentation Harness Proprietary Data with Foundational Models and RAG?",
+      "expected_behavior": "answer",
+      "reference": "The presentation was authored by Marian Veteanu.",
+      "reference_key_points": ["Marian Veteanu"],
+      "reference_contexts": [{ "page": 1, "text": "by Marian Veteanu" }]
+    },
+    {
+      "id": "rag-002",
+      "split": "dev",
+      "topic": "foundations",
+      "type": "definition",
+      "difficulty": "easy",
+      "user_input": "According to the presentation, what are foundational models?",
+      "expected_behavior": "answer",
+      "reference": "They are large-scale models trained on vast, diverse data that can perform multiple tasks without task-specific training.",
+      "reference_key_points": [
+        "Large-scale models trained on diverse data",
+        "Can perform multiple tasks without task-specific training"
+      ],
+      "reference_contexts": [
+        {
+          "page": 5,
+          "text": "Large-scale models trained on vast amounts of diverse data."
+        },
+        {
+          "page": 5,
+          "text": "Capable of performing multiple tasks without task-specific training."
+        }
+      ]
+    },
+    {
+      "id": "rag-003",
+      "split": "dev",
+      "topic": "foundations",
+      "type": "comparison",
+      "difficulty": "medium",
+      "user_input": "How does the PDF describe the relationship between LLMs and foundational models?",
+      "expected_behavior": "answer",
+      "reference": "LLMs are a type of foundational model specifically designed to understand and generate human language.",
+      "reference_key_points": [
+        "LLMs are a subset of foundational models",
+        "They understand and generate human language"
+      ],
+      "reference_contexts": [
+        {
+          "page": 5,
+          "text": "Large Language Models (LLMs) are a type of foundational model specifically designed to understand and generate human language."
+        }
+      ]
+    },
+    {
+      "id": "rag-004",
+      "split": "dev",
+      "topic": "foundations",
+      "type": "list",
+      "difficulty": "medium",
+      "user_input": "Which three key characteristics of foundational models are listed in the PDF?",
+      "expected_behavior": "answer",
+      "reference": "The three characteristics are pretraining on extensive datasets, multimodal capabilities in some models, and transfer learning through fine-tuning for specific use cases.",
+      "reference_key_points": [
+        "Pretrained on extensive datasets",
+        "Some models accept text, images, and other inputs",
+        "Transfer learning or fine-tuning"
+      ],
+      "reference_contexts": [
+        {
+          "page": 5,
+          "text": "Pretrained: Built on extensive datasets, allowing generalization across different domains."
+        },
+        {
+          "page": 5,
+          "text": "Multimodal Capabilities: Some models handle text, images, and other forms of input."
+        },
+        {
+          "page": 5,
+          "text": "Transfer Learning: Fine-tuning these models for specific use cases with minimal data."
+        }
+      ]
+    },
+    {
+      "id": "rag-005",
+      "split": "dev",
+      "topic": "base_llm_limits",
+      "type": "list",
+      "difficulty": "medium",
+      "user_input": "What four limitations of base LLMs does the presentation identify?",
+      "expected_behavior": "answer",
+      "reference": "It identifies outdated knowledge, hallucinations, limited context windows, and retraining challenges.",
+      "reference_key_points": [
+        "Outdated knowledge",
+        "Hallucinations",
+        "Limited context windows",
+        "Retraining challenges"
+      ],
+      "reference_contexts": [
+        { "page": 7, "text": "Outdated Knowledge" },
+        { "page": 7, "text": "Hallucinations" },
+        { "page": 7, "text": "Limited Context Windows" },
+        { "page": 7, "text": "Retraining Challenges" }
+      ]
+    },
+    {
+      "id": "rag-006",
+      "split": "dev",
+      "topic": "base_llm_limits",
+      "type": "reasoning",
+      "difficulty": "medium",
+      "user_input": "Why can a base LLM give a plausible-sounding but incorrect answer, according to the slides?",
+      "expected_behavior": "answer",
+      "reference": "LLMs are probabilistic and rely on patterns from their training data. When uncertain, they may generate plausible but incorrect responses, which the slides call hallucinations.",
+      "reference_key_points": [
+        "Probabilistic reliance on training-data patterns",
+        "Uncertainty can produce plausible but incorrect responses"
+      ],
+      "reference_contexts": [
+        {
+          "page": 7,
+          "text": "Cause: LLMs are probabilistic and rely on patterns from their training data. When uncertain, they may \"hallucinate\" plausible-sounding but incorrect responses."
+        }
+      ]
+    },
+    {
+      "id": "rag-007",
+      "split": "dev",
+      "topic": "base_llm_limits",
+      "type": "factual",
+      "difficulty": "easy",
+      "user_input": "According to the slide Your First Encounter with an LLM, when do models have access to proprietary databases or private information?",
+      "expected_behavior": "answer",
+      "reference": "The slide says models do not have access to proprietary databases or private information unless it is explicitly provided during a conversation.",
+      "reference_key_points": [
+        "Not available by default",
+        "Explicitly provided during the conversation"
+      ],
+      "reference_contexts": [
+        {
+          "page": 6,
+          "text": "The models don’t have access to proprietary databases or private information unless explicitly provided during a conversation."
+        }
+      ]
+    },
+    {
+      "id": "rag-008",
+      "split": "dev",
+      "topic": "rag_basics",
+      "type": "definition",
+      "difficulty": "easy",
+      "user_input": "What does RAG stand for, and what does it combine in this presentation?",
+      "expected_behavior": "answer",
+      "reference": "RAG stands for Retrieval-Augmented Generation. It combines large language models with real-time retrieval of information from external sources.",
+      "reference_key_points": [
+        "Retrieval-Augmented Generation",
+        "LLMs plus retrieval from external sources"
+      ],
+      "reference_contexts": [
+        {
+          "page": 8,
+          "text": "Retrieval-Augmented Generation (RAG) combines the power of Large Language Models (LLMs) with real-time information retrieval from external sources."
+        }
+      ]
+    },
+    {
+      "id": "rag-009",
+      "split": "dev",
+      "topic": "rag_basics",
+      "type": "list",
+      "difficulty": "medium",
+      "user_input": "What three enterprise benefits of RAG are highlighted on the Introducing RAG slide?",
+      "expected_behavior": "answer",
+      "reference": "RAG helps reduce hallucinations, lets LLMs use up-to-date proprietary business data, and provides real-time access to enterprise knowledge for answers tailored to business needs.",
+      "reference_key_points": [
+        "Reduces hallucinations",
+        "Uses proprietary business data",
+        "Real-time access to enterprise knowledge"
+      ],
+      "reference_contexts": [
+        {
+          "page": 8,
+          "text": "Reduces Hallucinations: By incorporating real-time, factual information from business knowledge bases, RAG helps mitigate the risk of LLMs generating false or incorrect responses."
+        },
+        {
+          "page": 8,
+          "text": "Leverages Proprietary Data: RAG enables LLMs to access and use up-to-date, proprietary business data that wasn't available during the model's initial training."
+        },
+        {
+          "page": 8,
+          "text": "Real-Time Knowledge Access: RAG allows models to generate responses based on specific enterprise datasets, offering better answers tailored to business needs."
+        }
+      ]
+    },
+    {
+      "id": "rag-010",
+      "split": "dev",
+      "topic": "rag_basics",
+      "type": "workflow",
+      "difficulty": "medium",
+      "user_input": "What are the three stages on the How RAG works slide, in order?",
+      "expected_behavior": "answer",
+      "reference": "First, the user asks a question. Second, the system retrieves relevant documents or data from a database. Third, the LLM uses the retrieved context to generate a more accurate and relevant response.",
+      "reference_key_points": [
+        "User question",
+        "Retrieve relevant documents or data",
+        "Generate an answer using that context",
+        "Preserve the order"
+      ],
+      "reference_contexts": [
+        {
+          "page": 9,
+          "text": "1. Question or Query: User asks a question. 2. Information Retrieval: The system retrieves relevant documents or data from a database. 3. LLM Generation: The LLM uses this context to generate a more accurate and relevant response."
+        }
+      ]
+    },
+    {
+      "id": "rag-011",
+      "split": "dev",
+      "topic": "rag_basics",
+      "type": "comparison",
+      "difficulty": "medium",
+      "user_input": "In the slide's architecture diagram, what extra information is sent to the LLM with RAG compared with without RAG?",
+      "expected_behavior": "answer",
+      "reference": "Without RAG, the LLM receives the prompt and query. With RAG, it also receives retrieved context, so the input is prompt, query, and context.",
+      "reference_key_points": [
+        "Without RAG: prompt and query",
+        "With RAG: prompt, query, and retrieved context"
+      ],
+      "reference_contexts": [
+        { "page": 9, "text": "(Prompt + Query)" },
+        { "page": 9, "text": "(Prompt + Query + Context)" }
+      ]
+    },
+    {
+      "id": "rag-012",
+      "split": "test",
+      "topic": "ingestion",
+      "type": "workflow",
+      "difficulty": "medium",
+      "user_input": "What are the four document ingestion steps listed in the PDF, in order?",
+      "expected_behavior": "answer",
+      "reference": "Select relevant documents; cleanse and preprocess them into clean, machine-readable content; generate vector embeddings of their content; and store the embeddings in a vector database.",
+      "reference_key_points": [
+        "Select documents",
+        "Clean and preprocess",
+        "Generate embeddings",
+        "Store in a vector database",
+        "Preserve the order"
+      ],
+      "reference_contexts": [
+        {
+          "page": 10,
+          "text": "Step 1: Select your documents: Find all relevant documents in various formats (PDF , Word, etc.)."
+        },
+        {
+          "page": 10,
+          "text": "Step 2: Data Cleansing and Preprocessing: Convert documents into a clean, machine-readable format, remove unnecessary data"
+        },
+        {
+          "page": 10,
+          "text": "Step 3: Generate embeddings: Generate vector representations of the document’s content."
+        },
+        {
+          "page": 10,
+          "text": "Step 4: Store embeddings in a Vector DB: Fast, scalable information retrieval."
+        }
+      ]
+    },
+    {
+      "id": "rag-013",
+      "split": "test",
+      "topic": "ingestion",
+      "type": "factual",
+      "difficulty": "easy",
+      "user_input": "What does the document ingestion slide say to do during data cleansing and preprocessing?",
+      "expected_behavior": "answer",
+      "reference": "Convert documents into a clean, machine-readable format and remove unnecessary data.",
+      "reference_key_points": [
+        "Convert to a clean machine-readable format",
+        "Remove unnecessary data"
+      ],
+      "reference_contexts": [
+        {
+          "page": 10,
+          "text": "Step 2: Data Cleansing and Preprocessing: Convert documents into a clean, machine-readable format, remove unnecessary data"
+        }
+      ]
+    },
+    {
+      "id": "rag-014",
+      "split": "test",
+      "topic": "embeddings",
+      "type": "definition",
+      "difficulty": "easy",
+      "user_input": "According to the PDF, what are embeddings and why are they useful beyond keyword matching?",
+      "expected_behavior": "answer",
+      "reference": "Embeddings are dense numerical representations of data in a high-dimensional vector space. They capture semantic meaning, allowing similarities and relevant information to be found beyond keyword matches.",
+      "reference_key_points": [
+        "Dense numerical vectors in a high-dimensional space",
+        "Capture semantic meaning",
+        "Support similarity beyond keyword matching"
+      ],
+      "reference_contexts": [
+        {
+          "page": 11,
+          "text": "Embeddings are dense, numerical representations of data (like text, images, or documents) in a high-dimensional vector space."
+        },
+        {
+          "page": 11,
+          "text": "They capture the semantic meaning of the data, enabling the system to find similarities or relevant information beyond keyword matching."
+        }
+      ]
+    },
+    {
+      "id": "rag-015",
+      "split": "test",
+      "topic": "embeddings",
+      "type": "list",
+      "difficulty": "easy",
+      "user_input": "Which embedding-model examples are named on the About embeddings slide?",
+      "expected_behavior": "answer",
+      "reference": "The slide names OpenAI's text-embedding-ada-002, Sentence-Transformers, and BERT.",
+      "reference_key_points": [
+        "text-embedding-ada-002",
+        "Sentence-Transformers",
+        "BERT"
+      ],
+      "reference_contexts": [
+        {
+          "page": 11,
+          "text": "Choose an Embedding Model: Select a model that generates embeddings (e.g., OpenAI's text-embedding-ada-002, Sentence-Transformers, or BERT)."
+        }
+      ]
+    },
+    {
+      "id": "rag-016",
+      "split": "test",
+      "topic": "embeddings",
+      "type": "numeric",
+      "difficulty": "easy",
+      "user_input": "How many dimensions does the slide's text-embedding-ada-002 example have?",
+      "expected_behavior": "answer",
+      "reference": "The slide states that text-embedding-ada-002 produces embeddings with 1,536 dimensions.",
+      "reference_key_points": ["1536 dimensions"],
+      "reference_contexts": [
+        {
+          "page": 11,
+          "text": "1536 dimensions for OpenAI's text-embedding-ada-002 model"
+        }
+      ]
+    },
+    {
+      "id": "rag-017",
+      "split": "test",
+      "topic": "vector_databases",
+      "type": "definition",
+      "difficulty": "easy",
+      "user_input": "What is a vector database designed to store, manage, and search, according to the PDF?",
+      "expected_behavior": "answer",
+      "reference": "It is designed to store, manage, and search high-dimensional vectors such as embeddings, retrieving information by similarity rather than exact matches.",
+      "reference_key_points": [
+        "High-dimensional vectors such as embeddings",
+        "Similarity-based retrieval"
+      ],
+      "reference_contexts": [
+        {
+          "page": 12,
+          "text": "Vector databases are specialized databases designed to store, manage, and search high-dimensional vectors (such as embeddings)."
+        },
+        {
+          "page": 12,
+          "text": "These vectors represent the semantic meaning of data, allowing the system to retrieve relevant information based on similarity rather than exact matches."
+        }
+      ]
+    },
+    {
+      "id": "rag-018",
+      "split": "test",
+      "topic": "vector_databases",
+      "type": "comparison",
+      "difficulty": "medium",
+      "user_input": "According to the slide Why Not Use a Regular Database, why does it favor a vector database for semantic search?",
+      "expected_behavior": "answer",
+      "reference": "The slide describes regular databases as optimized for exact matches or basic keyword search. It favors vector databases because they support meaning-based search and integrate with machine learning pipelines for embedding storage and retrieval; it says regular databases would need custom solutions or workarounds.",
+      "reference_key_points": [
+        "Slide characterizes regular databases as exact-match or keyword oriented",
+        "Semantic search concerns meaning",
+        "Vector databases integrate with ML pipelines",
+        "Answer is the slide's comparison, not a claim about every modern database"
+      ],
+      "reference_contexts": [
+        {
+          "page": 12,
+          "text": "Regular databases (e.g., relational or NoSQL databases) are optimized for exact matches or basic keyword-based search."
+        },
+        {
+          "page": 12,
+          "text": "They are not designed to handle the complexity of semantic search, which relies on understanding the meaning of data rather than just matching keywords."
+        },
+        {
+          "page": 12,
+          "text": "Vector databases integrate deeply with machine learning pipelines and tools, enabling seamless storage and retrieval of embeddings. Regular databases would require custom solutions or inefficient workarounds to achieve the same functionality."
+        }
+      ]
+    },
+    {
+      "id": "rag-019",
+      "split": "test",
+      "topic": "vector_databases",
+      "type": "factual",
+      "difficulty": "easy",
+      "user_input": "How can vector databases incorporate new information as data is ingested, according to the presentation?",
+      "expected_behavior": "answer",
+      "reference": "They can update dynamically by incorporating new embeddings as data is ingested.",
+      "reference_key_points": [
+        "Dynamic updates",
+        "New embeddings added during ingestion"
+      ],
+      "reference_contexts": [
+        {
+          "page": 12,
+          "text": "Vector databases can update dynamically, incorporating new embeddings as data is ingested."
+        }
+      ]
+    },
+    {
+      "id": "rag-020",
+      "split": "test",
+      "topic": "vector_databases",
+      "type": "scenario",
+      "difficulty": "medium",
+      "user_input": "How does the customer-support-ticket example use a vector database to answer a new query?",
+      "expected_behavior": "answer",
+      "reference": "It stores embeddings for thousands of support tickets and retrieves the tickets most semantically similar to a new query.",
+      "reference_key_points": [
+        "Store support-ticket embeddings",
+        "Retrieve tickets by semantic similarity to the query"
+      ],
+      "reference_contexts": [
+        {
+          "page": 12,
+          "text": "A vector database stores embeddings for thousands of customer support tickets. When a new query comes in, the system can quickly retrieve the most relevant tickets based on their semantic similarity to the query."
+        }
+      ]
+    },
+    {
+      "id": "rag-021",
+      "split": "dev",
+      "topic": "providers",
+      "type": "list",
+      "difficulty": "medium",
+      "user_input": "Which four services are listed under Cloud-Based Vector Databases in the presentation?",
+      "expected_behavior": "answer",
+      "reference": "The slide lists Pinecone, Azure Cognitive Search with Vector Search, Amazon Kendra, and Google Vertex AI Matching Engine.",
+      "reference_key_points": [
+        "Pinecone",
+        "Azure Cognitive Search with Vector Search",
+        "Amazon Kendra",
+        "Google Vertex AI Matching Engine"
+      ],
+      "reference_contexts": [
+        { "page": 13, "text": "Pinecone https://www.pinecone.io" },
+        { "page": 13, "text": "Azure Cognitive Search with Vector Search" },
+        { "page": 13, "text": "Amazon Kendra" },
+        { "page": 13, "text": "Google Vertex AI Matching Engine" }
+      ]
+    },
+    {
+      "id": "rag-022",
+      "split": "dev",
+      "topic": "providers",
+      "type": "list",
+      "difficulty": "medium",
+      "user_input": "Which six names appear under Open-Source Vector Databases in the slides?",
+      "expected_behavior": "answer",
+      "reference": "The slide lists Weaviate, Milvus, Qdrant, Vespa, Vald, and Faiss (Facebook AI Similarity Search).",
+      "reference_key_points": [
+        "Weaviate",
+        "Milvus",
+        "Qdrant",
+        "Vespa",
+        "Vald",
+        "Faiss"
+      ],
+      "reference_contexts": [
+        {
+          "page": 13,
+          "text": "Open-Source Vector Databases Weaviate https://weaviate.io Milvus https://milvus.io Qdrant https://qdrant.tech Vespa https://vespa.ai Vald https://vald.vdaas.org Faiss (Facebook AI Similarity Search) https://github.com/facebookresearch/faiss"
+        }
+      ]
+    },
+    {
+      "id": "rag-023",
+      "split": "test",
+      "topic": "prompting",
+      "type": "workflow",
+      "difficulty": "medium",
+      "user_input": "What three steps does the PDF give for integrating retrieved information into a prompt?",
+      "expected_behavior": "answer",
+      "reference": "Retrieve relevant data from the vector database, include that retrieved text or data in the prompt, and send the augmented prompt to the LLM.",
+      "reference_key_points": [
+        "Retrieve relevant data",
+        "Include retrieved text or data in the prompt",
+        "Send augmented prompt to the LLM",
+        "Preserve the order"
+      ],
+      "reference_contexts": [
+        {
+          "page": 14,
+          "text": "Step 1. Retrieve Relevant Data: Use RAG to pull specific, contextually relevant information from your vector database (e.g., proprietary documents or recent data)."
+        },
+        {
+          "page": 14,
+          "text": "Step 2. Embed the Context in the Prompt: Include the retrieved text or data in your prompt to give the LLM a knowledge base to work from."
+        },
+        { "page": 14, "text": "Step 3. Send augmented prompt to LLM" }
+      ]
+    },
+    {
+      "id": "rag-024",
+      "split": "test",
+      "topic": "prompting",
+      "type": "scenario",
+      "difficulty": "easy",
+      "user_input": "What does the presentation recommend when retrieved information is too long for the model's context window?",
+      "expected_behavior": "answer",
+      "reference": "Summarize the retrieved information so it fits within the model's context window.",
+      "reference_key_points": ["Summarize the retrieved information to fit"],
+      "reference_contexts": [
+        {
+          "page": 14,
+          "text": "Summarize retrieved information if it’s too lengthy to fit within the model’s context window."
+        }
+      ]
+    },
+    {
+      "id": "rag-025",
+      "split": "dev",
+      "topic": "code_examples",
+      "type": "factual",
+      "difficulty": "easy",
+      "user_input": "Which packages does Code Sample: Part 1 tell the reader to install?",
+      "expected_behavior": "answer",
+      "reference": "The sample shows pip install openai pinecone-client.",
+      "reference_key_points": [
+        "openai",
+        "pinecone-client",
+        "Describe the sample, not current installation advice"
+      ],
+      "reference_contexts": [
+        { "page": 15, "text": "pip install openai pinecone-client" }
+      ]
+    },
+    {
+      "id": "rag-026",
+      "split": "dev",
+      "topic": "code_examples",
+      "type": "code_reading",
+      "difficulty": "medium",
+      "user_input": "In Code Sample: Part 1, how are embedding IDs formed and which operation stores the vectors?",
+      "expected_behavior": "answer",
+      "reference": "The sample uses IDs of the form doc{i}, such as doc0 and doc1, and stores each embedding with index.upsert(vectors=[(f\"doc{i}\", emb)]).",
+      "reference_key_points": [
+        "IDs doc0, doc1, etc. formed from enumeration index",
+        "index.upsert stores vectors"
+      ],
+      "reference_contexts": [
+        {
+          "page": 15,
+          "text": "# Use a simple id like 'doc0', 'doc1' for i, emb in enumerate(embeddings): index.upsert(vectors=[(f\"doc{i}\", emb)])"
+        }
+      ]
+    },
+    {
+      "id": "rag-027",
+      "split": "dev",
+      "topic": "code_examples",
+      "type": "code_reading",
+      "difficulty": "easy",
+      "user_input": "In Code Sample: Part 2, what query is embedded and what top_k value is used in the Pinecone query?",
+      "expected_behavior": "answer",
+      "reference": "The query is 'What is Pinecone used for?' and the Pinecone query uses top_k=2.",
+      "reference_key_points": ["What is Pinecone used for?", "top_k=2"],
+      "reference_contexts": [
+        { "page": 16, "text": "query = \"What is Pinecone used for?\"" },
+        {
+          "page": 16,
+          "text": "result = index.query(queries=[query_embedding], top_k=2)"
+        }
+      ]
+    },
+    {
+      "id": "rag-028",
+      "split": "dev",
+      "topic": "code_examples",
+      "type": "code_reading",
+      "difficulty": "easy",
+      "user_input": "Which generation engine and max_tokens value are shown in the PDF's Code Sample: Part 2?",
+      "expected_behavior": "answer",
+      "reference": "The historical sample uses engine='text-davinci-003' and max_tokens=100.",
+      "reference_key_points": [
+        "text-davinci-003",
+        "max_tokens=100",
+        "Historical code sample, not a current model recommendation"
+      ],
+      "reference_contexts": [
+        {
+          "page": 16,
+          "text": "engine=\"text-davinci-003\", prompt=final_prompt, max_tokens=100"
+        }
+      ]
+    },
+    {
+      "id": "rag-029",
+      "split": "test",
+      "topic": "frameworks",
+      "type": "list",
+      "difficulty": "easy",
+      "user_input": "Which frameworks does the presentation suggest checking before coding a first RAG application?",
+      "expected_behavior": "answer",
+      "reference": "It names Langchain, Transformers by Hugging Face, LlamaIndex, and Haystack.",
+      "reference_key_points": [
+        "Langchain",
+        "Transformers by Hugging Face",
+        "LlamaIndex",
+        "Haystack"
+      ],
+      "reference_contexts": [
+        {
+          "page": 17,
+          "text": "checkout the different available frameworks such as Langchain, Transformers (by Hugging Face), LlamaIndex, Haystack, etc."
+        }
+      ]
+    },
+    {
+      "id": "rag-030",
+      "split": "test",
+      "topic": "frameworks",
+      "type": "reasoning",
+      "difficulty": "medium",
+      "user_input": "How does the presentation say Langchain simplifies RAG application development?",
+      "expected_behavior": "answer",
+      "reference": "It simplifies connecting LLMs to vector databases, APIs, and other tools, supports dynamic data in prompts, and combines LLM tasks and retrieval steps into chains.",
+      "reference_key_points": [
+        "Integration with external data sources and tools",
+        "Dynamic input data in prompts",
+        "Combine LLM and retrieval tasks in chains"
+      ],
+      "reference_contexts": [
+        {
+          "page": 17,
+          "text": "It simplifies the integration of LLMs with external data sources, such as vector databases (like Pinecone), APIs, or other tools, to support Retrieval-Augmented Generation (RAG)."
+        },
+        {
+          "page": 17,
+          "text": "It helps with prompt engineering by allowing dynamic input data in prompts. It facilitates combining multiple LLM tasks and data retrieval steps into a single workflow (chains)."
+        }
+      ]
+    },
+    {
+      "id": "rag-031",
+      "split": "dev",
+      "topic": "security",
+      "type": "factual",
+      "difficulty": "easy",
+      "user_input": "What does the security slide recommend access controls should restrict?",
+      "expected_behavior": "answer",
+      "reference": "Access controls should limit who can interact with vector databases and LLM systems, allowing only authorized personnel and systems access to sensitive information.",
+      "reference_key_points": [
+        "Restrict interaction with vector databases and LLM systems",
+        "Only authorized personnel and systems access sensitive information"
+      ],
+      "reference_contexts": [
+        {
+          "page": 18,
+          "text": "Use access controls to limit who can interact with the vector database and LLM systems, ensuring only authorized personnel and systems have access to sensitive information."
+        }
+      ]
+    },
+    {
+      "id": "rag-032",
+      "split": "dev",
+      "topic": "security",
+      "type": "list",
+      "difficulty": "medium",
+      "user_input": "Which regulatory frameworks and privacy techniques are named on the security slide?",
+      "expected_behavior": "answer",
+      "reference": "The slide names GDPR, HIPAA, and CCPA, and mentions data anonymization or pseudonymization when necessary to protect privacy.",
+      "reference_key_points": [
+        "GDPR, HIPAA, CCPA",
+        "Anonymization or pseudonymization when necessary"
+      ],
+      "reference_contexts": [
+        {
+          "page": 18,
+          "text": "Adhere to regulatory frameworks such as GDPR, HIPAA, or CCPA. Ensure that data anonymization or pseudonymization techniques are applied when necessary to protect user privacy."
+        }
+      ]
+    },
+    {
+      "id": "rag-033",
+      "split": "dev",
+      "topic": "security",
+      "type": "reasoning",
+      "difficulty": "medium",
+      "user_input": "Why does the PDF recommend detailed logging and monitoring of RAG requests and responses?",
+      "expected_behavior": "answer",
+      "reference": "To make data usage transparent and auditable during security or compliance reviews.",
+      "reference_key_points": [
+        "Transparent data usage",
+        "Auditability for security or compliance reviews"
+      ],
+      "reference_contexts": [
+        {
+          "page": 18,
+          "text": "Implement detailed logging and monitoring of all requests and responses in RAG systems to ensure that data usage is transparent and auditable in case of security or compliance reviews."
+        }
+      ]
+    },
+    {
+      "id": "rag-034",
+      "split": "test",
+      "topic": "end_user_tools",
+      "type": "list",
+      "difficulty": "easy",
+      "user_input": "Which two end-user tools are linked on the End-user tools slide?",
+      "expected_behavior": "answer",
+      "reference": "The slide links to GPT4All at nomic.ai/gpt4all and PDF.ai at pdf.ai.",
+      "reference_key_points": ["GPT4All", "PDF.ai"],
+      "reference_contexts": [
+        { "page": 19, "text": "https://www.nomic.ai/gpt4all https://pdf.ai/" }
+      ]
+    },
+    {
+      "id": "rag-035",
+      "split": "dev",
+      "topic": "employee_use_cases",
+      "type": "scenario",
+      "difficulty": "medium",
+      "user_input": "What two employee onboarding and training uses are described in the PDF?",
+      "expected_behavior": "answer",
+      "reference": "New hires can ask questions and retrieve relevant answers from company resources, and personalized training programs can be generated for their job roles.",
+      "reference_key_points": [
+        "Quick knowledge retrieval for new hires",
+        "Personalized training based on job roles"
+      ],
+      "reference_contexts": [
+        {
+          "page": 3,
+          "text": "Quick Knowledge Retrieval: Enable new hires to ask questions and get relevant answers from company resources."
+        },
+        {
+          "page": 3,
+          "text": "Customized Training: Generate personalized training programs based on job roles."
+        }
+      ]
+    },
+    {
+      "id": "rag-036",
+      "split": "dev",
+      "topic": "employee_use_cases",
+      "type": "scenario",
+      "difficulty": "medium",
+      "user_input": "How could the IT and Technical Support Automation uses in the slides help support engineers and developers?",
+      "expected_behavior": "answer",
+      "reference": "Support engineers can retrieve past incident logs and guides to resolve issues faster. Developers can receive real-time code snippets and best practices from internal repositories.",
+      "reference_key_points": [
+        "Retrieve incident logs and guides for issue resolution",
+        "Code snippets and best practices from internal repositories"
+      ],
+      "reference_contexts": [
+        {
+          "page": 3,
+          "text": "Faster Issue Resolution: Retrieve past incident logs and guides for resolving tech issues."
+        },
+        {
+          "page": 3,
+          "text": "Developer Support: Provide real-time code snippets and best practices from internal repositories."
+        }
+      ]
+    },
+    {
+      "id": "rag-037",
+      "split": "test",
+      "topic": "business_use_cases",
+      "type": "multi_hop",
+      "difficulty": "hard",
+      "user_input": "Across the use-case slides, how does RAG support inventory forecasting and dynamic pricing?",
+      "expected_behavior": "answer",
+      "reference": "Inventory forecasting uses real-time and historical data to generate forecasts. Dynamic pricing retrieves competitor and market data to optimize pricing strategies.",
+      "reference_key_points": [
+        "Inventory forecasts use real-time and historical data",
+        "Dynamic pricing uses competitor and market data"
+      ],
+      "reference_contexts": [
+        {
+          "page": 3,
+          "text": "Inventory Forecasting: Generate forecasts based on real-time and historical data."
+        },
+        {
+          "page": 4,
+          "text": "Dynamic Pricing: Retrieve competitor and market data to optimize pricing strategies."
+        }
+      ]
+    },
+    {
+      "id": "rag-038",
+      "split": "dev",
+      "topic": "rag_basics",
+      "type": "multi_hop",
+      "difficulty": "hard",
+      "user_input": "Using the base-LLM limitations slide and Introducing RAG slide, explain how RAG addresses outdated knowledge.",
+      "expected_behavior": "answer",
+      "reference": "The limitations slide says a trained LLM retains a fixed snapshot of knowledge and updating it requires resource-intensive retraining or fine-tuning. The RAG slide describes retrieving up-to-date proprietary business data unavailable during initial training and using enterprise knowledge to inform responses.",
+      "reference_key_points": [
+        "Base model retains a fixed training snapshot",
+        "Retraining or fine-tuning is resource-intensive",
+        "RAG retrieves up-to-date proprietary data for responses"
+      ],
+      "reference_contexts": [
+        {
+          "page": 7,
+          "text": "Cause: Once an LLM is trained, it retains a fixed snapshot of the world’s knowledge. Updates require full retraining or fine-tuning, which is resource-intensive."
+        },
+        {
+          "page": 8,
+          "text": "Leverages Proprietary Data: RAG enables LLMs to access and use up-to-date, proprietary business data that wasn't available during the model's initial training."
+        }
+      ]
+    },
+    {
+      "id": "rag-039",
+      "split": "test",
+      "topic": "embeddings",
+      "type": "multi_hop",
+      "difficulty": "hard",
+      "user_input": "Using the embeddings and vector database slides, distinguish the job of an embedding model from the job of a vector database.",
+      "expected_behavior": "answer",
+      "reference": "An embedding model converts text into numerical vector representations. A vector database stores, manages, and searches those high-dimensional vectors to find similar information.",
+      "reference_key_points": [
+        "Embedding model converts text to vectors",
+        "Vector database stores, manages, and searches vectors"
+      ],
+      "reference_contexts": [
+        {
+          "page": 11,
+          "text": "Generate Embeddings: Use the model to convert the text into vectors. Each word, sentence, or document gets transformed into a vector representation."
+        },
+        {
+          "page": 12,
+          "text": "Vector databases are specialized databases designed to store, manage, and search high-dimensional vectors (such as embeddings)."
+        }
+      ]
+    },
+    {
+      "id": "rag-040",
+      "split": "test",
+      "topic": "ingestion",
+      "type": "multi_hop",
+      "difficulty": "hard",
+      "user_input": "Combine the document ingestion and prompting slides: how do proprietary documents become context for an LLM response?",
+      "expected_behavior": "answer",
+      "reference": "Select and clean the documents, generate embeddings, and store them in a vector database. Retrieve relevant information from that database, put the retrieved text or data into the prompt, and send the augmented prompt to the LLM.",
+      "reference_key_points": [
+        "Select and clean documents",
+        "Generate and store embeddings",
+        "Retrieve relevant information",
+        "Include it in a prompt sent to the LLM"
+      ],
+      "reference_contexts": [
+        {
+          "page": 10,
+          "text": "Step 1: Select your documents: Find all relevant documents in various formats (PDF , Word, etc.)."
+        },
+        {
+          "page": 10,
+          "text": "Step 2: Data Cleansing and Preprocessing: Convert documents into a clean, machine-readable format, remove unnecessary data"
+        },
+        {
+          "page": 10,
+          "text": "Step 3: Generate embeddings: Generate vector representations of the document’s content."
+        },
+        {
+          "page": 10,
+          "text": "Step 4: Store embeddings in a Vector DB: Fast, scalable information retrieval."
+        },
+        {
+          "page": 14,
+          "text": "Step 1. Retrieve Relevant Data: Use RAG to pull specific, contextually relevant information from your vector database (e.g., proprietary documents or recent data)."
+        },
+        {
+          "page": 14,
+          "text": "Step 2. Embed the Context in the Prompt: Include the retrieved text or data in your prompt to give the LLM a knowledge base to work from."
+        },
+        { "page": 14, "text": "Step 3. Send augmented prompt to LLM" }
+      ]
+    },
+    {
+      "id": "rag-041",
+      "split": "dev",
+      "topic": "missing_chunk_configuration",
+      "type": "unanswerable",
+      "difficulty": "medium",
+      "user_input": "What exact chunk size in characters does the PDF recommend for splitting documents?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF does not specify an exact chunk size.",
+      "reference_key_points": [
+        "State that the PDF does not specify this",
+        "Do not invent a chunk size or use this repository's settings"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "The ingestion slide does not specify chunk sizes; repository settings are outside the PDF-only scope."
+    },
+    {
+      "id": "rag-042",
+      "split": "dev",
+      "topic": "missing_chunk_configuration",
+      "type": "unanswerable",
+      "difficulty": "medium",
+      "user_input": "How many characters of chunk overlap does the presentation prescribe?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The presentation does not prescribe a chunk overlap.",
+      "reference_key_points": [
+        "State that chunk overlap is unspecified",
+        "Do not invent an overlap value"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "No chunk-overlap setting is given in the presentation."
+    },
+    {
+      "id": "rag-043",
+      "split": "test",
+      "topic": "missing_vendor_benchmarks",
+      "type": "unanswerable",
+      "difficulty": "hard",
+      "user_input": "Which listed vector database has the lowest measured query latency, and what is its latency in milliseconds?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF lists providers but gives no comparative latency benchmark.",
+      "reference_key_points": [
+        "No latency benchmark is provided",
+        "Do not rank vendors or fabricate milliseconds"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "Provider descriptions contain no measured latency comparison."
+    },
+    {
+      "id": "rag-044",
+      "split": "test",
+      "topic": "missing_vendor_benchmarks",
+      "type": "unanswerable",
+      "difficulty": "medium",
+      "user_input": "According to the PDF, what is Pinecone's monthly price for storing one million vectors?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF does not provide that pricing information.",
+      "reference_key_points": [
+        "Pricing is not provided",
+        "Do not supply an external or invented price"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "Pinecone is described but no pricing table or storage cost is supplied."
+    },
+    {
+      "id": "rag-045",
+      "split": "dev",
+      "topic": "missing_evaluation_results",
+      "type": "unanswerable",
+      "difficulty": "medium",
+      "user_input": "What RAGAS faithfulness score did the demonstrated RAG system achieve?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF reports no RAGAS faithfulness score.",
+      "reference_key_points": [
+        "No RAGAS score is reported",
+        "Do not fabricate an evaluation result"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "The PDF contains no RAGAS evaluation or measured faithfulness result."
+    },
+    {
+      "id": "rag-046",
+      "split": "dev",
+      "topic": "missing_credentials",
+      "type": "unanswerable",
+      "difficulty": "easy",
+      "user_input": "What is the actual OpenAI API key used by the author in the embedding example?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The example contains only the placeholder 'your-api-key-here', not an actual API key.",
+      "reference_key_points": [
+        "No actual key is supplied",
+        "The sample value is a placeholder"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "The code sample uses a placeholder rather than revealing a real API key."
+    },
+    {
+      "id": "rag-047",
+      "split": "test",
+      "topic": "missing_deployment_details",
+      "type": "unanswerable",
+      "difficulty": "hard",
+      "user_input": "How many documents were in the author's production knowledge base?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF does not state the size of the author's production knowledge base.",
+      "reference_key_points": [
+        "Production corpus size is not stated",
+        "Do not confuse the three sample documents or hypothetical support tickets with a production corpus"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "Illustrative sample documents and support-ticket examples are not a reported production corpus."
+    },
+    {
+      "id": "rag-048",
+      "split": "test",
+      "topic": "missing_current_product_details",
+      "type": "unanswerable",
+      "difficulty": "hard",
+      "user_input": "Based only on this PDF, what is the newest OpenAI embedding model available today?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF gives embedding-model examples but does not establish which model is newest today.",
+      "reference_key_points": [
+        "The PDF cannot establish today's newest model",
+        "Do not present the sample model as the newest"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "Historical examples cannot establish a current newest product."
+    },
+    {
+      "id": "rag-049",
+      "split": "dev",
+      "topic": "security",
+      "type": "unanswerable",
+      "difficulty": "hard",
+      "user_input": "Which certification does the PDF provide to prove its example implementation is HIPAA compliant?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF mentions HIPAA as a regulatory framework but provides no certification for the example implementation.",
+      "reference_key_points": [
+        "No certification is provided",
+        "Mentioning HIPAA does not establish certification"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "The security slide gives general guidance, not a certification or compliance assessment."
+    },
+    {
+      "id": "rag-050",
+      "split": "test",
+      "topic": "missing_deployment_details",
+      "type": "unanswerable",
+      "difficulty": "medium",
+      "user_input": "What measured end-to-end response time in milliseconds does the PDF report for its RAG code sample?",
+      "expected_behavior": "abstain",
+      "reference": "I don't know. The PDF reports no measured end-to-end response time for its sample.",
+      "reference_key_points": [
+        "No measured end-to-end response time is reported",
+        "Do not invent a timing result"
+      ],
+      "reference_contexts": [],
+      "unanswerable_reason": "The code samples show workflow and parameters without performance measurements."
+    }
+  ]
+}
