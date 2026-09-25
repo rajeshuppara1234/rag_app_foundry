@@ -71,7 +71,7 @@ def test_no_context_skips_generation():
     retriever, model = Mock(), Mock()
     retriever.retrieve.return_value = []
     generator = AugmentGen.__new__(AugmentGen)
-    assert generator.rag_simple("test", retriever, model) == "I don't know."
+    assert generator.rag_simple("test", retriever, model) == "not found in embedding docs"
     model.invoke.assert_not_called()
 
 
