@@ -4,9 +4,9 @@ from langchain.chat_models import init_chat_model
 from pathlib import Path
 from pydantic import BaseModel, Field
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
+ROOT_DIR = Path(__file__).resolve().parents[2]
 print("Root directory:", ROOT_DIR)
-load_dotenv(ROOT_DIR / ".env") 
+load_dotenv(ROOT_DIR / ".env", override=False)
 
 model = init_chat_model("gpt-4o-mini")
 

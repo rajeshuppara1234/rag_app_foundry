@@ -1,10 +1,11 @@
 import os
+from pathlib import Path
 
 from azure.ai.projects import AIProjectClient
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent / ".env", override=False)
 
 project = AIProjectClient(
     endpoint=os.environ["FOUNDRY_PROJECT_ENDPOINT"],

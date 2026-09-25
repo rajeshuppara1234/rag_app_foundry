@@ -6,9 +6,9 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langchain.agents.middleware import SummarizationMiddleware
 from langgraph.checkpoint.memory import InMemorySaver
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
+ROOT_DIR = Path(__file__).resolve().parents[2]
 print("Root directory:", ROOT_DIR)
-load_dotenv(ROOT_DIR / ".env") 
+load_dotenv(ROOT_DIR / ".env", override=False)
 
 
 agent = create_agent(

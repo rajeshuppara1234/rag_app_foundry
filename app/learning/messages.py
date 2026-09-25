@@ -8,9 +8,9 @@ from pathlib import Path
 from langchain.messages import SystemMessage, HumanMessage, AIMessage
 
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
+ROOT_DIR = Path(__file__).resolve().parents[2]
 print("Root directory:", ROOT_DIR)
-load_dotenv(ROOT_DIR / ".env") 
+load_dotenv(ROOT_DIR / ".env", override=False)
 
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 model = init_chat_model(

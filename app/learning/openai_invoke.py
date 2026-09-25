@@ -3,11 +3,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
+ROOT_DIR = Path(__file__).resolve().parents[2]
 
 
 def main():
-    load_dotenv(ROOT_DIR / ".env")  # Load environment variables from project root
+    load_dotenv(ROOT_DIR / ".env", override=False)  # Load environment variables from project root
     openai_api_key = os.getenv("OPENAI_API_KEY")
 
     llm = ChatOpenAI(

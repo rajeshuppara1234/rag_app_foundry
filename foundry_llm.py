@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from azure.identity import (
     DefaultAzureCredential,
@@ -8,7 +9,7 @@ from azure.identity import (
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent / ".env", override=False)
 
 
 token_provider = get_bearer_token_provider(
