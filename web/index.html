@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Knowledge Assistant</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <header><a href="/" class="brand">Knowledge Assistant</a><button id="signout" hidden>Sign out</button></header>
+  <main>
+    <p class="eyebrow">YOUR SHARED KNOWLEDGE BASE</p>
+    <h1>Answers grounded<br>in your documents.</h1>
+    <p class="intro">Ask a question and explore the supporting sources. Sign in or create an account to get started.</p>
+    <button id="signin" disabled>Sign in or create account</button>
+    <p id="status" role="status" aria-live="polite">Loading sign-in…</p>
+    <form id="question-form" hidden>
+      <label for="question">What would you like to know?</label>
+      <textarea id="question" maxlength="4000" rows="4" required placeholder="Ask about the documents…"></textarea>
+      <div class="form-footer"><span>Each question is answered independently.</span><button id="ask" type="submit">Ask a question</button></div>
+    </form>
+    <section id="result" hidden aria-live="polite">
+      <h2>Answer</h2><p id="answer"></p>
+      <h3 id="sources-heading" hidden>Supporting documents</h3><ul id="sources"></ul>
+      <p class="note">Check the cited documents before relying on an answer.</p>
+    </section>
+  </main>
+  <footer>Foundry Knowledge Assistant</footer>
+</body>
+</html>

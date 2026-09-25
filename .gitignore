@@ -16,3 +16,12 @@ app/models/sentence-transformers/
 .env
 .env.*
 !.env.example
+
+# Built web assets and dependency caches
+web/node_modules/
+.npm-cache/
+app/static/
+.pytest_cache/
+.coverage
+deploy/*.local.*
+deploy/*.generated.json

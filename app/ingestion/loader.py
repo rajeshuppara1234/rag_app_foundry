@@ -10,7 +10,7 @@ def process_all_pdfs(pdfdirectory: str = "app/data") -> list[Document]:
 
     pdf_files = list(pdf_dir.glob("*.pdf"))
 
-    #print(f"list of pdf files {pdf_files}")
+    # print(f"list of pdf files {pdf_files}")
 
     for pdf_file in pdf_files:
         print(f"\nProcessing file: {pdf_file}")
@@ -25,9 +25,9 @@ def process_all_pdfs(pdfdirectory: str = "app/data") -> list[Document]:
             all_documents.extend(documents)
             print(f"Loaded {len(documents)} pages")
         except Exception as e:
-            print(f"Error: {e}")
+            raise RuntimeError(f"Failed to load PDF: {pdf_file.name}") from e
 
-    #print(f"\nTotal documents loaded: {len(all_documents)}")
+    # print(f"\nTotal documents loaded: {len(all_documents)}")
     return all_documents
 
 

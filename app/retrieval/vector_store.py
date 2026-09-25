@@ -1,116 +1,111 @@
-import numpy as np
-from sentence_transformers import SentenceTransformer
+"""Chroma SDK access for trusted ingestion and local evaluation."""
+
+from hashlib import sha256
+import json
+import logging
+import math
+from urllib.parse import urlsplit
+
 import chromadb
-from chromadb.config import Settings
-import uuid
-from pathlib import Path
-import sys
-from typing import Dict, List, Any, Tuple
-from sklearn.metrics.pairwise import cosine_similarity
+from chromadb.config import Settings as ChromaSettings
 from langchain_core.documents import Document
 
-from app.ingestion.embeddings import EmbeddingManager
-from app.ingestion.splitter import load_and_split_documents
+from app.config import BackendSettings
+
+logger = logging.getLogger(__name__)
+
 
 class VectorStore:
-    def __init__(self, collection_name: str = "pdf_documents", 
-                 persist_directory: str = "app/data/vector_store"):
-        self.collection_name = collection_name
-        self.collection = None
-        self.persist_directory = persist_directory
-        self.client = None
-        self.initialize_vector_store()
-        #self.client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory="./chroma_db"))
-        
-    
-    def initialize_vector_store(self):
-        """Initialize the Chroma vector store."""
-        try:
-            # create a persistent directory for the vector store if it doesn't exist
-            print(f"Persist directory: {self.persist_directory}")
-            Path(self.persist_directory).mkdir(parents=True, exist_ok=True)
-            # self.client = chromadb.PersistentClient(path=self.persist_directory)
-
-            self.client = chromadb.HttpClient(
-                host="chroma-db.happymeadow-76a7f72e.southindia.azurecontainerapps.io",
-                port=443,
-                ssl=True)
-
-            print(self.client.heartbeat())
-
-            # get or create the collection for storing embeddings
+    def __init__(
+        self,
+        collection_name: str | None = None,
+        *,
+        create_collection: bool = False,
+        settings: BackendSettings | None = None,
+    ):
+        self.settings = settings or BackendSettings()
+        self.collection_name = collection_name or self.settings.chroma_collection
+        parsed = urlsplit(self.settings.chroma_url)
+        if parsed.scheme not in ("http", "https") or not parsed.hostname:
+            raise ValueError("Set CHROMA_URL to your Chroma server URL")
+        headers = {}
+        if self.settings.chroma_auth_token:
+            headers[self.settings.chroma_auth_header] = (
+                self.settings.chroma_auth_token.get_secret_value()
+            )
+        self.client = chromadb.HttpClient(
+            host=self.settings.chroma_url,
+            port=parsed.port or (443 if parsed.scheme == "https" else 80),
+            ssl=parsed.scheme == "https",
+            headers=headers,
+            tenant=self.settings.chroma_tenant,
+            database=self.settings.chroma_database,
+            settings=ChromaSettings(anonymized_telemetry=False),
+        )
+        if create_collection:
             self.collection = self.client.get_or_create_collection(
                 name=self.collection_name,
-                metadata={"description": "Collection for storing PDF document embeddings"}
+                embedding_function=None,
+                configuration={"hnsw": {"space": "cosine"}},
             )
-            print(f"Initialized vector store with collection: {self.collection_name}")
-            print(f"Existing collections: {self.collection.count()}")
-        except Exception as e:
-            print(f"Error initializing vector store: {e}")
-            raise
+        else:
+            self.collection = self.client.get_collection(
+                name=self.collection_name, embedding_function=None
+            )
 
-    def add_embeddings(self, documents: List[Document], embeddings: List[List[float] | np.ndarray]):
-        """Add embeddings and their corresponding documents to the vector store.
-        
-        Args:
-            documents (List[Document]): A list of Document objects to be added to the vector store
-            embeddings (List[List[float] | np.ndarray]): Embeddings as float lists or NumPy arrays, one per document.
-        
-        """
-        try:
-            if len(documents) != len(embeddings):
-                raise ValueError("The number of documents must match the number of embeddings.")
+    def add_embeddings(self, documents: list[Document], embeddings):
+        if len(documents) != len(embeddings):
+            raise ValueError(
+                "The number of documents must match the number of embeddings."
+            )
+        if not documents:
+            return
+        ids, metadatas, texts, vectors = [], [], [], []
+        dimension = None
+        for i, (doc, vector) in enumerate(zip(documents, embeddings, strict=True)):
+            vector = [float(value) for value in vector]
+            if not vector or not all(math.isfinite(value) for value in vector):
+                raise ValueError("Embeddings must be nonempty finite vectors")
+            dimension = dimension or len(vector)
+            if len(vector) != dimension:
+                raise ValueError("All embeddings must have the same dimension")
+            metadata = dict(doc.metadata)
+            metadata.update(doc_index=i, content_length=len(doc.page_content))
+            identity = json.dumps(
+                [doc.page_content, doc.metadata], sort_keys=True, default=str
+            )
+            ids.append(sha256(identity.encode()).hexdigest())
+            metadatas.append(metadata)
+            texts.append(doc.page_content)
+            vectors.append(vector)
+        # Stable IDs make retries safe for the same chunks. Changed files need
+        # a versioned collection and an explicit cutover to remove old chunks.
+        self.collection.upsert(
+            ids=ids, metadatas=metadatas, documents=texts, embeddings=vectors
+        )
 
-            print(f"Adding {len(documents)} documents to the vector store.")
-            
-            ids = []
-            metadatas = []
-            documents_text = []
-            embeddings_list = []
-
-            for i, (doc, emb) in enumerate(zip(documents, embeddings)):
-                doc_id = f"doc_{uuid.uuid4().hex[:8]}_{i}"  # Generate a unique ID for each document
-                ids.append(doc_id)
-
-                #prepare metadata and text for storage
-                metadata = dict(doc.metadata)  # Ensure metadata is a dictionary
-                metadata['doc_index'] = i  # Add an index to the metadata for reference
-                metadata['content_length'] = len(doc.page_content)  # Add content length to metadata
-                metadatas.append(metadata)
-
-                #Document Content and Embeddings
-                documents_text.append(doc.page_content)
-                embeddings_list.append(emb.tolist() if isinstance(emb, np.ndarray) else emb)
-
-            try:
-                self.collection.add(
-                    ids=ids,
-                    metadatas=metadatas,
-                    documents=documents_text,
-                    embeddings=embeddings_list
-                )
-                print(f"Successfully added {len(documents)} documents to the vector store.")
-                print(f"Total documents in collection '{self.collection_name}': {self.collection.count()}")
-            except Exception as e:
-                print(f"Error adding embeddings to vector store: {e}")
-                raise
-
-        except Exception as e:
-            print(f"Error adding embeddings to vector store: {e}")
-            raise
 
 if __name__ == "__main__":
-    vector_store = VectorStore()
-    embedding_manager = EmbeddingManager()
-    final_split_docs = load_and_split_documents()
-    generated_embeddings = embedding_manager.generate_embeddings([doc.page_content for doc in final_split_docs])
+    import argparse
+    from app.ingestion.embeddings import EmbeddingManager
+    from app.ingestion.splitter import load_and_split_documents
 
-    vector_store.add_embeddings(final_split_docs, generated_embeddings)
-
-    print(f"New collections: {vector_store.collection.count()}")
-    # print("Generated embeddings:")
-    # for i, emb in enumerate(generated_embeddings)[:1]:  # Print only the first 2 for brevity
-    #     print(f"Text: {[doc.page_content for doc in final_split_docs][i]}")
-    #     print(f"Embedding: {emb}\n")
-
-    
+    parser = argparse.ArgumentParser(
+        description="Trusted, offline ingestion into Chroma"
+    )
+    parser.add_argument("--data-dir", default="app/data")
+    parser.add_argument("--create-collection", action="store_true")
+    args = parser.parse_args()
+    store = VectorStore(create_collection=args.create_collection)
+    manager = EmbeddingManager()
+    try:
+        documents = load_and_split_documents(args.data_dir)
+        if not documents:
+            raise SystemExit("No PDF chunks were loaded; nothing was written.")
+        for offset in range(0, len(documents), 32):
+            batch = documents[offset : offset + 32]
+            vectors = manager.generate_embeddings([doc.page_content for doc in batch])
+            store.add_embeddings(batch, vectors)
+        print(f"Collection contains {store.collection.count()} chunks.")
+    finally:
+        manager.close()

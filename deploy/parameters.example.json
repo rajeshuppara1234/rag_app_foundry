@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appName": { "value": "rag-web" },
+    "location": { "value": "southindia" },
+    "environmentId": { "value": "/subscriptions/SUBSCRIPTION/resourceGroups/GROUP/providers/Microsoft.App/managedEnvironments/ENVIRONMENT" },
+    "registryServer": { "value": "REGISTRY.azurecr.io" },
+    "image": { "value": "REGISTRY.azurecr.io/rag-web:RELEASE-TAG" },
+    "identityResourceId": { "value": "/subscriptions/SUBSCRIPTION/resourceGroups/GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/rag-web-identity" },
+    "identityClientId": { "value": "MANAGED-IDENTITY-CLIENT-ID" },
+    "environmentVariables": { "value": {
+      "PUBLIC_ORIGIN": "https://rag-web.ENVIRONMENT-DOMAIN.azurecontainerapps.io",
+      "FOUNDRY_OPENAI_ENDPOINT": "https://RESOURCE.openai.azure.com/openai/v1/",
+      "FOUNDRY_CHAT_MODEL": "CHAT-DEPLOYMENT",
+      "AZURE_OPENAI_ENDPOINT": "https://RESOURCE.openai.azure.com/",
+      "AZURE_OPENAI_EMBEDDING_DEPLOYMENT": "EMBEDDING-DEPLOYMENT",
+      "CHROMA_URL": "https://CHROMA-INTERNAL-FQDN",
+      "CHROMA_COLLECTION": "pdf_documents",
+      "AUTH_AUTHORITY": "https://TENANT.ciamlogin.com/",
+      "AUTH_ISSUER": "COPY-ISSUER-FROM-OPENID-CONFIGURATION",
+      "AUTH_JWKS_URL": "COPY-JWKS-URI-FROM-OPENID-CONFIGURATION",
+      "AUTH_AUDIENCE": "API-APPLICATION-CLIENT-ID",
+      "AUTH_SPA_CLIENT_ID": "SPA-APPLICATION-CLIENT-ID",
+      "AUTH_SCOPE": "api://API-APPLICATION-CLIENT-ID/access_as_user",
+      "AUTH_REQUIRED_SCOPE": "access_as_user"
+    } },
+    "keyVaultSecrets": { "value": [] }
+  }
+}

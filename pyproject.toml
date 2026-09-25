@@ -1,14 +1,15 @@
 [project]
 name = "rag-app-foundry"
 version = "0.1.0"
-description = "Add your description here"
+description = "Authenticated RAG web application using Foundry and remote Chroma"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "azure-ai-projects>=2.6.1",
     "azure-identity>=1.25.3",
     "chromadb>=1.5.9",
-    "faiss-cpu>=1.14.3",
+    "fastapi>=0.115,<1",
+    "httpx>=0.28,<1",
     "langchain>=1.3.14",
     "langchain-community>=0.4.2",
     "langchain-core>=1.4.9",
@@ -17,8 +18,13 @@ dependencies = [
     "pymupdf>=1.28.0",
     "pypdf>=6.14.2",
     "python-dotenv>=1.2.2",
-    "sentence-transformers>=3.0.0",
+    "pydantic-settings>=2.14,<3",
+    "pyjwt[crypto]>=2.12,<3",
+    "uvicorn>=0.52,<1",
 ]
+
+[project.optional-dependencies]
+learning = ["faiss-cpu>=1.14.3", "sentence-transformers>=3.0.0"]
 
 [dependency-groups]
 dev = [
@@ -27,3 +33,9 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.15.22",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "evaluation"]
+
+[tool.ruff]
+target-version = "py312"
